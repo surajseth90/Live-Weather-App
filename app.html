@@ -1,12 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="app.css" />
     <title>Weather App</title>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2><i class="fa fa-map-marker"></i><span id="location"></span></h2>
+        <h6 id="weather"></h6>
+        <h4>
+          <span id="temp"><sup>o</sup>C</span>
+        </h4>
+        <img id="icon" src="" alt="" />
+        <button class="refresh" onclick="window.location.reload()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+    link =
+      "https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=0a1c4fccb72c25207ed704e8020ef41f";
+    var req = new XMLHttpRequest();
+    req.open("GET", link, true);
+    req.onload = function () {
+      var obj = JSON.parse(this.response);
+      console.log(obj);
+      document.getElementById("weather").innerHTML = obj.weather[0].description;
+      document.getElementById("location").innerHTML = obj.name;
+      document.getElementById("temp").innerHTML = Math.round(
+        obj.main.temp - 273.15
+      );
+      document.getElementById("icon").src =
+        "https://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
+    };
+    if (req.status >= 200 && req.status < 400) {
+      var temp = obj.main.temp;
+    } else {
+      console.log("City data is not available");
+    }
+    req.send();
+  </script>
 </html>
